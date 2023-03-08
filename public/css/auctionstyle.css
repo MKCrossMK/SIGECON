@@ -1,0 +1,77 @@
+.w_carousel{
+    padding: 0 100px 0 100px;
+    min-width: 500px !important;
+}
+
+.article_img {
+    height: 500px !important;
+    width: 500px !important;
+}
+
+.nextorprev_btn {
+    background-color: #000000 ;
+    border-radius: 50%;
+}
+
+.detail_t {
+    width: 100%;
+    max-width: 100%;
+    min-width: 300px;
+    border: #000000 solid 2px;
+    padding: 10px ;
+}
+
+.text{
+    font-weight: bold;
+}
+
+.hover_white:hover{
+    color: #ffffff !important;
+}
+
+
+
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+
+    }
+    
+    table th,
+    table td {
+    padding: 20px;
+    background: #EEEEEE;
+    text-align: end;
+
+    border-bottom: 1px solid #FFFFFF;
+    }
+    
+    table th {
+    white-space: nowrap;        
+    font-weight: bold;
+    }
+
+    
+    table td {
+    text-align: right;
+    }
+    
+    table .no {
+        text-align: center !important;
+        font-size: 12px;
+        background: #e9e9e9;
+    }
+    
+    table .unit {
+    background: #f2f2f2;
+    }
+    
+   
+    table td.unit,
+    table td.total {
+    font-size: 1em;
+    }
+    
+   
+    

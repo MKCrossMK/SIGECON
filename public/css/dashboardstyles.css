@@ -1,0 +1,548 @@
+.cardbtn h4 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.boder-orange {
+    border: solid 2px;
+    /* background-color: #cb9b2bf4; */
+    background-image: linear-gradient(#e4b851, #cb9b2bf4);
+    border-color: #cb9a2b;
+    color: white;
+}
+
+/* Vista clientes */
+
+.title_div {
+    margin-bottom: 20px;
+}
+
+.title_views {
+    color: #7c795d;
+    font-family: "Trocchi", serif;
+    font-size: 50px;
+    font-weight: normal;
+    line-height: 48px;
+    margin: 0;
+}
+
+.client_name {
+    text-align: center;
+    color: #000000;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 48px;
+    margin: 0;
+}
+
+.client_cedula {
+    text-align: center;
+    color: #000000;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 48px;
+}
+
+.color-gold {
+    color: #cb9a2b;
+}
+
+.btn_gold {
+    background-color: #cb9a2b !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.btn_blue {
+    background-color: #2b3552 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.btn_danger {
+    background-color: inherit !important;
+    border-color: #d51414 !important;
+    font-weight: bold !important;
+}
+
+.btn_danger:hover {
+    background-color: #d51414 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.btn_success {
+    background-color: inherit !important;
+    border-color: #12b134 !important;
+    font-weight: bold !important;
+}
+
+.btn_success:hover {
+    background-color: #12b134 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.btn_gray {
+    background-color: inherit !important;
+    border-color: #676767 !important;
+    font-weight: bold !important;
+}
+
+.btn_gray:hover {
+    background-color: #9ea3aa !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.btn_generate {
+    background-color: inherit !important;
+    border-color: #08bd78 !important;
+    font-weight: bold !important;
+}
+
+.btn_generate:hover {
+    background-color: #08bd78 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+input,
+select,
+textarea {
+    border-radius: 5px !important;
+}
+
+.div-view {
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 700px;
+    padding: 15px;
+    background-color: #f2f0f7;
+    border-radius: 25px;
+}
+
+.div-view-buttons {
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 700px;
+    padding: 15px;
+    border-radius: 25px;
+}
+
+/* End V. Clientes */
+
+/* User View */
+
+
+.success {
+    background-color: #2be478 !important;
+    color: #ffffff !important;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.warning {
+    background-color: #f4d03f !important;
+    color: #ffffff !important;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.see {
+    background-color: #2b3552 !important;
+    color: #ffffff !important;
+}
+
+select[name="user_table_length"],
+select[name="client_table_length"], 
+select[name="policies_table_length"], 
+select[name="old_policies_table_length"],
+select[name="policies_auctions_table_length"],
+select[name="participant_table_length"], 
+select[name="interest_table_length"] {
+    width: 70px !important;
+}
+
+/* Texto de user desactivado */
+
+.user_deactive_text {
+    font-size: 28px;
+    font-family: helvetica;
+    font-weight: bold;
+    color: #7c795d;
+    font-family: "Trocchi", serif;
+}
+
+.parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo {
+    0% {
+        opacity: 3;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 3;
+    }
+}
+
+@-webkit-keyframes parpadeo {
+    0% {
+        opacity: 3;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 3;
+    }
+}
+
+@keyframes parpadeo {
+    0% {
+        opacity: 3;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 3;
+    }
+}
+
+
+
+/* Configuracion user View */
+.div-view-configuration {
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    background-color: #f2f0f7;
+    border-radius: 25px;
+}
+
+.back_view {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 25px;
+
+}
+
+.title_cp {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.text_span {
+    font-weight: bold;
+}
+
+
+/* Configuracion user View END*/
+
+
+
+
+/* End V. User */
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Vista de polizas index, create, edit and more */
+
+.btn_link {
+    font-size: 25px !important;
+    border-color: #ca992a !important;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.btn_link:hover {
+    background-color: #ca992a !important;
+    color: #ffffff !important;
+}
+
+.btn_link:hover .color-gold {
+    color: #ffffff !important;
+}
+
+/* policies view */
+
+.div-view-policies {
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 15px;
+    background-color: #f2f0f7;
+    border-radius: 25px;
+}
+
+.col_label_input_align {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.client_name_input {
+    border: none !important;
+    background-color: transparent !important;
+    font-size: 30px !important;
+    font-weight: bold !important;
+}
+
+/* policies */
+
+.btn_search_client {
+    border-color: #000000 !important;
+}
+
+.btn_search_client:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.date_title {
+    font-weight: bold;
+}
+
+.div_btn_add {
+    display: flex !important;
+    align-content: center !important;
+    justify-content: center !important;
+}
+
+.btn_add {
+    background-color: transparent !important;
+    border: 4px solid #626381 !important;
+    color: #626381 !important;
+    font-weight: bold !important;
+}
+.btn_add:hover {
+    background-color: #ca9a2ab4 !important;
+    border: 4px solid #cb9a2b !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.money_title {
+    background-color: #626381;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.total_label {
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+}
+
+.btn_delete {
+    background-color: #d51414 !important;
+    color: #ffffff !important;
+}
+
+.img_article {
+    height: 200px;
+    width: 250px;
+    object-fit: contain;
+}
+
+.img_article_add {
+    height: 200px;
+    width: 250px;
+    object-fit: contain;
+}
+
+.div_article {
+    border: 3px solid #ca992a;
+    border-radius: 15px;
+    padding: 1%;
+}
+
+.txarea_desc {
+    height: 100% !important;
+}
+
+/* Detalles de poliza style */
+
+.text-secondary-d1 {
+    color: #728299!important;
+}
+.page-header {
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+    border-bottom: 1px dotted #e2e2e2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.page-title {
+    padding: 0;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 300;
+}
+.brc-default-l1 {
+    border-color: #dce9f0!important;
+}
+
+.ml-n1, .mx-n1 {
+    margin-left: -.25rem!important;
+}
+.mr-n1, .mx-n1 {
+    margin-right: -.25rem!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.text-grey-m2 {
+    color: #888a8d!important;
+}
+
+.text-success-m2 {
+    color: #86bd68!important;
+}
+
+.font-bolder, .text-600 {
+    font-weight: 600!important;
+}
+
+.text-110 {
+    font-size: 110%!important;
+}
+.text-blue {
+    color: #478fcc!important;
+}
+.pb-25, .py-25 {
+    padding-bottom: .75rem!important;
+}
+
+.pt-25, .py-25 {
+    padding-top: .75rem!important;
+}
+.bgc-default-tp1 {
+    background-color: rgba(43, 155, 220, 0.92)!important;
+}
+.bgc-default-l4, .bgc-h-default-l4:hover {
+    background-color: #f3f8fa!important;
+}
+.page-header .page-tools {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
+
+.btn-light {
+    color: #757984;
+    background-color: #f5f6f9;
+    border-color: #dddfe4;
+}
+.w-2 {
+    width: 1rem;
+}
+
+.text-120 {
+    font-size: 120%!important;
+}
+.text-primary-m1 {
+    color: #4087d4!important;
+}
+
+.text-danger-m1 {
+    color: #dd4949!important;
+}
+.text-blue-m2 {
+    color: #68a3d5!important;
+}
+.text-150 {
+    font-size: 150%!important;
+}
+.text-60 {
+    font-size: 60%!important;
+}
+.text-grey-m1 {
+    color: #7b7d81!important;
+}
+.align-bottom {
+    vertical-align: bottom!important;
+}
+
+.input_border {
+    border: none !important;
+}
+
+.div-view-referrer {
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 700px;
+    padding: 15px !important;
+    border-radius: 25px;
+    background-color: #68a2d5b2;
+    border: 2px solid #68a3d5;
+    
+}
+
+.text_bold {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.back_color_view {
+    background-color: #dddfe424;
+    border: 4px solid;
+    border-bottom: 4px solid #6c757d;
+}
+.text_gold {
+    font-weight: bold !important;
+    color: #bf9023;
+}
+
+.img_article_show {
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.img_article_edit {
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* End Detalle de poliza Style */
+
+
+
