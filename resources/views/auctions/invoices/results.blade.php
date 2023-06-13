@@ -28,6 +28,8 @@
             <div>
 
                 <div class="cabecera-head text-center">
+                    <h3 class="text-xl"><b>MINISTERIO DE HACIENDA</b></h3>
+
                     <h4><b>CAJA DE AHORROS PARA OBREROS Y MONTE DE PIEDAD</b></h4>
 
                     <h5><b>VENTA EN PÚBLICA SUBASTA</b></h5>
@@ -73,7 +75,7 @@
 
                 <p class="text-center mt-2 mb-2"><b>Prendas Subastadas</b><p>
 
-                <table cellspacing="0" cellpadding="0">
+                {{-- <table cellspacing="0" cellpadding="0">
                     <thead>
                       <tr>
                         <th class="no">#</th>
@@ -104,28 +106,39 @@
                       @endforeach
                     </tbody>
                 
-                  </table>
+                  </table> --}}
 
             </div>
 
-            <div>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th class="no">Cantidad de Polizas de Preciosos a Subastar</th>
+                        <th class="desc text-center">{{$toCount}}</th>
+                    </tr>
+                    <tr>
+                        <th class="no">Cantidad de Polizas de Preciosos Vendidas en Subasta</th>
+                        <th class="desc text-center">{{$adDetails}}</th>
+                    </tr>
+                    <tr>
+                        <th class="no">Cantidad de Polizas de Preciosos Adjudicadas a Monte de Piedad</th>
+                        <th class="desc text-center">{{$adCount}}</th>
+                    </tr>
+                    <tr>
+                        <th class="no">Cantidad de Polizas de Preciosos Adjudicadas a Monte de Piedad</th>
+                        <th class="desc text-center">{{ number_format($total, 2, '.', ',') }} DOP</th>
+                    </tr>
+                </thead>
+                
+            </table>
 
-
-                <br>
-                <ul>
-                    {{-- @foreach ($policyDetails as $item)
-                        <li> {{ $item->description . ' ; Peso: ' . $item->weight . ' ; Gramo:  ' . $item->carat }}</li>
-                    @endforeach --}}
-
-                </ul>
-                <br>
-            </div>
+            
 
             <hr class="mt-3 mb-3">
 
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
                              
                         </div>
@@ -143,7 +156,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
             <br>

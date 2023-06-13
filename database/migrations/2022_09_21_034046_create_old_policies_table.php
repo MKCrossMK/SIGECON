@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('old_policies', function (Blueprint $table) {
             $table->id();
-            $table->string('number_policy');
+            $table->string('number_policy')->unique();
             $table->date('date_start');
             $table->date('date_end');
             // $table->date('last_updated_interest');

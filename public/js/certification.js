@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $("#btn_modalsaveclient").hide();
 
-    $("#a_image").change(function () {
-        let img = document.getElementById("a_image");
+    $("#image").change(function () {
+        let img = document.getElementById("image");
         let img_prev = document.getElementById("img_prev");
 
         const [file] = img.files;
@@ -10,6 +10,16 @@ $(document).ready(function () {
             img_prev.src = URL.createObjectURL(file);
         }
     });
+
+    if($("#a_image").val() != "") {
+        let img = document.getElementById("a_image");
+        let img_prev = document.getElementById("img_prev");
+
+        const [file] = img.files;
+        if (file) {
+            img_prev.src = URL.createObjectURL(file);
+        }
+    }
 });
 
 
@@ -133,6 +143,30 @@ function storeClient(){
     })();
 
 };
+
+
+const btnSubmit = document.getElementById('submitCertification');
+
+
+function confirmSubmit() {
+    Swal.fire({
+        title: 'Confirmación',
+        text: "¿Desea registrar esta certificación?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Realizar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('certification_form').submit();
+        }
+      });
+
+}
+
+btnSubmit.addEventListener('click',  confirmSubmit);
+
 
 
 

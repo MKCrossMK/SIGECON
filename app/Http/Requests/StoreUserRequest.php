@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\EmptyCashCashier;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -30,6 +32,9 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|unique:users',
             'password' => 'required',
             'rol_id' => 'required',
+            'cash_id' => [
+                'required_if:rol_id,8','nullable' , 'unique:users'
+            ],
             'branch_office_id' => 'required',
         ];
     }
@@ -51,6 +56,7 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'Este Correo Electronico ya está registrado en nuestra base de datos',
             'rol_id.required' => 'Nivel de Acceso o Rol es requerido',
             'branch_office_id.required' => 'Sucursal es requerida',
+            'cash_id.required_if' => 'Debe asignar caja al cajero a registrar'
         ];
     }
 }

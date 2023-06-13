@@ -138,7 +138,7 @@
                                                 <select id="a_stonetype" class="form-control">
                                                     <option value="No especificado" selected aria-readonly="">Tipos de
                                                         piedra</option>
-                                                    <option value="Brillante">Diamante</option>
+                                                    <option value="Diamante">Diamante</option>
                                                     <option value="Zafiro">Zafiro</option>
                                                     <option value="Esmeralda">Esmeralda</option>
                                                     <option value="Granate">Granate</option>

@@ -42,7 +42,42 @@
                     <p><small>Este precio aumentará un 1% por cada puja</small></p>
 
                     <a href="{{ route('auctions.details.price.update', $auction_detail->id ) }}" class="btn btn_blue w-full mt-3">PUJAR</a>
+
+                    <div class="mt-4">
+                        <input type="checkbox" name="add_price" id="add_price">
+                        <label id="label_add_price" for="">Fijar Precio</label>
+
+                        <form action="{{ route('auctions.details.price.set', $auction_detail->id ) }}" class="mt-2" id="form_add_price" style="display: none">
+
+                            <div class="row align-items-center">
+                                <div class="col-3">
+                                    <label for="price" class="font-bold"> Precio a Fijar:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" placeholder="Precio a fijar" name="price" id="price" value="{{old('price')}}" class="w-100">
+                                    @error('price')
+                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                 @enderror
+
+                                 
+                                @if (Session::has('priceError'))
+                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                        {{ session()->get('priceError') }}
+                                    </div>
+                                    
+                                @endif
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn_gold w-100 mt-2">Actualizar</button>
+                        </form>
+                    </div>
+              
                 </div>
+
+
+                
 
                 <form action="{{ route('auctions.details.sell', $auction_detail->id) }}" method="POST" class="mt-3">
                     @csrf
@@ -126,6 +161,27 @@
         </script>
             
         @endif
+      
 
         <script src="{{ asset('js/dashboard.js') }}"></script>
+        <script src="{{ asset('js/auction.js') }}"></script>
+
+        @error('price')
+ 
+        <script>
+            let add_price = document.getElementById('add_price');
+            add_price.click();
+        </script>
+       
+       @enderror 
+
+       
+       @if (Session::has('priceError'))
+       <script>
+               let add_price = document.getElementById('add_price');
+            add_price.click();
+       </script>
+           
+       @endif
+
 </x-app-layout>

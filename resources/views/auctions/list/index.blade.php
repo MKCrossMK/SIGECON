@@ -23,8 +23,8 @@
                             <td>
                                 <div class="row">
                                     <div class="col">
-                                        <a href="{{ route('auctions.details.store', $auction->id) }}"
-                                            class="btn see w-100"><i class="fa-solid fa-table-list mr-2"></i>Ver Detalles </a>
+                                        <a href="{{ route('auctions.adjudications', $auction->id) }}"
+                                            class="btn see w-100"><i class="fa-solid fa-table-list mr-2"></i>Adjudicaciones </a>
                                     </div>
                                     <div class="col">
                                         <a href="{{ route('auctions.list.see', $auction->id) }}"

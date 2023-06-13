@@ -56,7 +56,7 @@
                                                 <select id="stone_type" name="stone_type" class="form-control">
                                                     <option @if ($oldPolicyDetail->stone_type  == "No especificado" ) selected @endif
                                                          value="No especificado" selected aria-readonly="">Tipos de piedra - No especificado</option>
-                                                    <option @if ($oldPolicyDetail->stone_type  == "Brillante" ) selected @endif  value="Brillante">Diamante</option>
+                                                    <option @if ($oldPolicyDetail->stone_type  == "Diamante" ) selected @endif  value="Diamante">Diamante</option>
                                                     <option @if ($oldPolicyDetail->stone_type  == "Zafiro" ) selected @endif   value="Zafiro">Zafiro</option>
                                                     <option @if ($oldPolicyDetail->stone_type  == "Esmeralda" ) selected @endif   value="Esmeralda">Esmeralda</option>
                                                     <option @if ($oldPolicyDetail->stone_type  == "Granate" ) selected @endif   value="Granate">Granate</option>

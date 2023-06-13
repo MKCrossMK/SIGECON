@@ -30,7 +30,9 @@ class Auction extends Model
 
 
     public function details(){
-       return $this->hasMany(AuctionDetail::class, 'auction_id', 'id');
+        $mdp = ParticipantOnAuction::where('number_paddle', 0)->first();
+
+       return $this->hasMany(AuctionDetail::class, 'auction_id', 'id')->where('participant_on_auctions_id', '!=', $mdp->id);
     }
 
     public function participants(){

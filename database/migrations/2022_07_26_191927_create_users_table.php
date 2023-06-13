@@ -24,15 +24,18 @@ return new class extends Migration
             $table->unsignedBigInteger('rol_id');
             $table->unsignedBigInteger('branch_office_id');
             $table->string('unique_code')->nullable();
-            $table->boolean('logged')->nullable();
+            $table->boolean('logged')->default(false);
             $table->dateTime('last_access')->nullable();
             $table->boolean('status')->nullable()->default(0);
+            $table->unsignedBigInteger('cash_id')->nullable()->unique();
 
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('rol_id')->references('id')->on('roles');
-            $table->foreign('branch_office_id')->references('id')->on('branch__offices')->onDelete('cascade');
+            $table->foreign('branch_office_id')->references('id')->on('branch__offices');
+            $table->foreign('cash_id')->references('id')->on('cashes');
+
         });
     }
 

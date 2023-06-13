@@ -32,7 +32,6 @@ class AuctionDetailController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -42,13 +41,13 @@ class AuctionDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     // 
+    // 
     public function store(StoreAuctionDetailRequest $request, Policy $policy)
     {
-        
+
         $auction_id = Auction::latest()->select('id')->where('status', 1)->first();
 
-        if($auction_id != null){
+        if ($auction_id != null) {
             $save = AuctionDetail::create([
                 'auction_id' => $auction_id->id,
                 'policy_id' => $policy->id,
@@ -57,54 +56,56 @@ class AuctionDetailController extends Controller
                 'status' => AuctionDetail::STATUS_TO_AUCTION
 
             ]);
-    
+
             if ($save) {
                 $policy->update([
                     'status' => Policy::STATUS_TO_AUCTION,
                 ]);
             }
-    
-            return redirect()->route('auctions.index')
-            ->with('success', 'Poliza: ' . $policy->number_policy . ' enviada a subasta correctamente');
-
-        } else{
 
             return redirect()->route('auctions.index')
-            ->with('error', 'No existe subasta');
+                ->with('success', 'Poliza: ' . $policy->number_policy . ' enviada a subasta correctamente');
+        } else {
 
+            return redirect()->route('auctions.index')
+                ->with('error', 'No existe subasta');
         }
-
-       
     }
-    
-    public function storeOldPolicy(StoreAuctionDetailRequest $request, OldPolicy $oldPolicy){
-        $auction_id = Auction::latest()->select('id')->where('status', 1)->first();
 
-        if($auction_id != null){
-            $save = AuctionDetail::create([
-                'auction_id' => $auction_id->id,
-                'policy_id' => $oldPolicy->id,
-                'policie_class_name' => OldPolicy::class,
-                'user_creator_id' => Auth::user()->id,
-                'status' => AuctionDetail::STATUS_TO_AUCTION
-            ]);
-    
-            if ($save) {
-                $oldPolicy->update([
-                    'status' => OldPolicy::STATUS_TO_AUCTION,
+    public function storeOldPolicy(StoreAuctionDetailRequest $request, OldPolicy $oldPolicy)
+    {
+        $auction_id = Auction::latest()->select('id', 'a_status')->where('status', 1)->first();
+
+        if ($auction_id != null) {
+
+            if ($auction_id->a_status == Auction::STATUS_STARTED || $auction_id->a_status == Auction::STATUS_CLOSED) {
+                
+                return redirect()->back()->with('error', 'Ya no se puede agregar polizas a la subasta, ha sido iniciada');
+
+            } elseif ($auction_id->a_status == Auction::STATUS_CREATED) {
+                # code...
+                $save = AuctionDetail::create([
+                    'auction_id' => $auction_id->id,
+                    'policy_id' => $oldPolicy->id,
+                    'policie_class_name' => OldPolicy::class,
+                    'user_creator_id' => Auth::user()->id,
+                    'status' => AuctionDetail::STATUS_TO_AUCTION
                 ]);
+
+                if ($save) {
+                    $oldPolicy->update([
+                        'status' => OldPolicy::STATUS_TO_AUCTION,
+                    ]);
+                }
+
+                return redirect()->route('auctions.index')
+                    ->with('success', 'Poliza: ' . $oldPolicy->number_policy . ' enviada a subasta correctamente');
             }
-    
-            return redirect()->route('auctions.index')
-            ->with('success', 'Poliza: ' . $oldPolicy->number_policy . ' enviada a subasta correctamente');
-
-        } else{
+        } else {
 
             return redirect()->route('auctions.index')
-            ->with('error', 'No existe subasta');
-
+                ->with('error', 'No existe subasta');
         }
-
     }
 
     /**
@@ -126,15 +127,19 @@ class AuctionDetailController extends Controller
      */
     public function edit(AuctionDetail $auctionDetail)
     {
-        return view('auctions.details.edit')
-        ->with('auctionDetail', $auctionDetail);
+        if ($auctionDetail->auction->status == true) {  // No se permite editar los articulos que pertenecen a subastas ya cerradas
+            return view('auctions.details.edit')
+                ->with('auctionDetail', $auctionDetail);
+        } else {
+            return redirect()->back();
+        }
     }
-    
+
     public function updateFirstBidPrice(Request $request, AuctionDetail $auctionDetail)
     {
         $request->validate([
-            'first_bid_price' => 'required|numeric', 
-        ],[
+            'first_bid_price' => 'required|numeric',
+        ], [
             'first_bid_price.required' => 'Precio de primera puja requerido',
             'first_bid_price.numeric' => 'Precio debe ser numerico',
         ]);
@@ -145,13 +150,14 @@ class AuctionDetailController extends Controller
         ]);
 
         return redirect()->route('auctions.index')
-        ->with('sucess', 'Precio de primera puja colocado a poliza:' . $auctionDetail->policy()->number_policy);
+            ->with('sucess', 'Precio de primera puja colocado a poliza:' . $auctionDetail->policy()->number_policy);
     }
 
 
     // Este metodo aumenta en 1% el precio de la poliza en la subasta al pujarse
-    public function upAuctionedrice(AuctionDetail $auctionDetail){
-        
+    public function upAuctionedPrice(AuctionDetail $auctionDetail)
+    {
+
         $cant = $auctionDetail->auctioned_price * 0.01;
         $auctionDetail->auctioned_price += $cant;
         $auctionDetail->bid_qty += 1;
@@ -162,13 +168,40 @@ class AuctionDetailController extends Controller
         } else {
             return redirect()->back()->with('error', 'Ha ocurrido un error');
         }
-        
+    }
+    // Este metodo aumenta en 1% el precio de la poliza en la subasta al pujarse
+    public function setPrice(Request $request,  AuctionDetail $auctionDetail)
+    {
+        $price =  $request->price - $auctionDetail->auctioned_price;
+        $cant = $auctionDetail->auctioned_price * 0.01;
+
+
+        $request->validate([
+            'price' => ['required', 'numeric', 'gt:' . $auctionDetail->auctioned_price,],
+        ]);
+
+        if ($price > $cant) {
+
+
+            $auctionDetail->auctioned_price = $request->price;
+
+            $saved =  $auctionDetail->save();
+
+            if ($saved) {
+                return redirect()->back()->with('success', 'Precio Actualizado correctamente');
+            } else {
+                return redirect()->back()->with('error', 'Ha ocurrido un error');
+            }
+        } else {
+            return redirect()->back()->with('priceError', 'Precio menor al 1% de puja')->withInput();
+        }
     }
 
-       // Metodo pora vender al participante la poliza 
+    // Metodo pora vender al participante la poliza 
     // Funcionará un metodo ruta para editar la poliza y actualizar el estado ponerla como subastada y el participante que la compró
 
-    public function sellPolicyAuctioned(Request $request, AuctionDetail $auctionDetail){
+    public function sellPolicyAuctioned(Request $request, AuctionDetail $auctionDetail)
+    {
 
         $request->validate([
             'participant_id' => 'required|',
@@ -176,7 +209,7 @@ class AuctionDetailController extends Controller
 
         $mdp = ParticipantOnAuction::where('number_paddle', 0)->first();
 
-        if ($request->participant_id == $mdp->id ) {
+        if ($request->participant_id == $mdp->id) {
 
             $auctionDetail->update([
                 'participant_on_auctions_id' => $request->participant_id,
@@ -184,26 +217,24 @@ class AuctionDetailController extends Controller
             ]);
 
             // Automaticamente al seleccionar monte de piedad, se adjudicará a este y se creará el registro en la BD
-            
-            Adjudication::create([
-                'auction_detail_id' => $auctionDetail->id,
-            ]);
 
+            Adjudication::create([
+                'auction_id' => $auctionDetail->auction->id,
+                'auction_detail_id' => $auctionDetail->id
+            ]);
         } else {
 
-        $auctionDetail->update([
-            'participant_on_auctions_id' => $request->participant_id,
-            'status' => AuctionDetail::STATUS_AUCTIONED,
-        ]);
-
+            $auctionDetail->update([
+                'participant_on_auctions_id' => $request->participant_id,
+                'status' => AuctionDetail::STATUS_AUCTIONED,
+            ]);
         }
-        
+
 
         return redirect()->route('auctions.go')
-        ->with('Poliza vendida a ');
-
+            ->with('Poliza vendida a ');
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -229,7 +260,6 @@ class AuctionDetailController extends Controller
         $auctionDetail->delete();
 
         return redirect()->route('auctions.index')
-        ->with('info', 'Poliza eliminada de subasta');
-
+            ->with('info', 'Poliza eliminada de subasta');
     }
 }

@@ -11,7 +11,7 @@
 
         <div class="div-view-policies">
             <div>
-                <form enctype="multipart/form-data" action="{{ route('policies.store') }}" method="POST">
+                <form enctype="multipart/form-data" action="{{ route('policies.store') }}" id="policy_form" method="POST">
                     @csrf
 
                     @if (Session::has('message'))
@@ -147,7 +147,7 @@
                                                 <select id="a_stonetype" class="form-control">
                                                     <option value="No especificado" selected aria-readonly="">Tipos de
                                                         piedra</option>
-                                                    <option value="Brillante">Diamante</option>
+                                                    <option value="Diamante">Diamante</option>
                                                     <option value="Zafiro">Zafiro</option>
                                                     <option value="Esmeralda">Esmeralda</option>
                                                     <option value="Granate">Granate</option>
@@ -366,8 +366,7 @@
                                     type="button">Cancelar</a>
                             </div>
                             <div class="col">
-                                <button id="send_pay" type="submit"
-                                    onclick="return confirm('¿Quiere generar la poliza?')""
+                                <button id="send_pay" type="button"
                                     class="btn btn_gold btn-block">Guardar</button>
                             </div>
                         </div>

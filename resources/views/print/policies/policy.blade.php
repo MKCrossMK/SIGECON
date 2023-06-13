@@ -121,6 +121,10 @@
             border-bottom: 0px;
             border-color: #ffffff;
         }
+
+        .font_bold{
+            font-weight: bold
+        }
     </style>
 </head>
 
@@ -205,7 +209,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm font_bold">
                     <center>
                         <br>
 
@@ -215,17 +219,42 @@
                     </center>
 
                 </div>
-                <div class="col-sm">
+                <div class="col-sm font_bold">
                     <center>
                         <br>
 
                         ___________________________________________
                         <br>
-                        Representante de Monte de Piedad
+                        Firma de Gerente
                     </center>
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-sm font_bold">
+                    <center>
+                        <br>
+
+                        ___________________________________________
+                        <br>
+                        Firma de Perito
+                    </center>
+
+                </div>
+                <div class="col-sm font_bold">
+                    <center>
+                        <br>
+
+                        ___________________________________________
+                        <br>
+                        Firma de Cajero
+                    </center>
+                </div>
+
+            </div>
+            
+            
             <div class="row" style="margin-top: 5%; border-style: groove; border-radius: 10px;">
                 {{-- if($poliza[0]["VIGENCIA"]==12)
            <p style="font-size: 14px; text-align: justify;">

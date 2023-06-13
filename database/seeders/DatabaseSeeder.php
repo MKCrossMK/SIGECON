@@ -22,15 +22,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
         $this->call([
             RoleSeeder::class, 
             BranchOfficeSeeder::class,
             GoldRateSeeder::class,
             InterestRateSeeder::class,
             UserSeeder::class,
+            CashSeeder::class,
             AuctionParticipantSeeder::class,
-
+            GarmentCertificationPriceSeeder::class,
         ]);
     }
 }

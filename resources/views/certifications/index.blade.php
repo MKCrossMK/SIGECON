@@ -17,30 +17,22 @@
             <table class="table table-striped " id="client_table">
                 <thead>
                     <tr>
-                        <th scope="col">Cedula</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Correo Electronico</th>
+                        <th scope="col">No. Certificación</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($clients as $client)
+                    @foreach ($certifications as $certification)
                         <tr>
-                            <th scope="row">{{ $client->cedula }}</th>
-                            <td>{{ $client->name . ' ' . $client->lastname }}</td>
-                            <td>
-                                @if ($client->phone == null)
-                                    Ver descripcion
-                                @else
-                                    {{ $client->phone }}
-                                @endif
-                            </td>
-                            <td>{{ $client->email }}</td>
-                            <td><a href="{{ route('clients.show', $client->id) }}" class="btn see w-100">Ver <i
+                            <th scope="row">{{ $certification->nCertification() }}</th>
+                            <td>{{ $certification->clients->fullname()}}</td>
+                            <td>{{ $certification->date_created()}}</td>
+                            <td><a href="{{ route('certifications.show', $certification->id) }}" class="btn see w-100">Ver <i
                                         class="fa-solid fa-eye mr-2"></i></a></td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

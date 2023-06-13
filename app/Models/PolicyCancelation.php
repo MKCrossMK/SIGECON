@@ -11,6 +11,7 @@ class PolicyCancelation extends Model
     protected $fillable = [
         'policy_id',
         'user_id',
+        'branch_offices_id',
         'interest_rate_paid',
         'contract_rate_paid',
         'capital_paid',

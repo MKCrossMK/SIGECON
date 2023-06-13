@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
-            $table->string('number_policy');
+            $table->string('number_policy')->unique();
             $table->date('date_start');
             $table->date('date_end');
             $table->date('last_updated_interest');
@@ -42,6 +42,7 @@ return new class extends Migration
             $table->boolean('status_credit_pay')->default(0);
             $table->boolean('status_renovation')->default(0);
             $table->boolean('status_cancelation')->default(0);
+            $table->boolean('disbursed')->default(false);
             $table->boolean('skip_interest_rate')->default(0);
             $table->unsignedBigInteger('user_id');  // Id Usuario
             $table->unsignedBigInteger('branch_offices_id'); // Id de sucursal

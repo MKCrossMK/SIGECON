@@ -47,7 +47,7 @@ class AdjudicationController extends Controller
      */
     public function show(Adjudication $adjudication)
     {
-        //
+    
     }
 
     /**

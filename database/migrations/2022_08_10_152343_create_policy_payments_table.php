@@ -24,6 +24,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('policy_id'); // Id poliza
             $table->unsignedBigInteger('user_id');  // Id Usuario
+            $table->unsignedBigInteger('branch_offices_id');  // Id de sucursal
+
            
             $table->float('interest_rate_paid'); 
             $table->float('interest_rate_paid_residuary');
@@ -38,6 +40,8 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('policy_id')->references('id')->on('policies');
+            $table->foreign('branch_offices_id')->references('id')->on('branch__offices');
+
             $table->timestamps();
         });
         

@@ -96,8 +96,10 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
+        $policies = $client->policies;
         return view('clients.show')
-        ->with('client', $client);
+        ->with('client', $client)
+        ->with('policies', $policies);
     }
 
     /**

@@ -31,7 +31,7 @@ class StoreClientApiRequest extends FormRequest
             'name' => 'required',
             'lastname' => 'required',
             'phone' => 'required',
-            'email' => 'unique:clients|required|',
+            'email' => 'unique:clients|nullable',
         ];
     }
 

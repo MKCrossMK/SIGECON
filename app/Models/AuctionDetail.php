@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AuctionDetail extends Model
 {
@@ -24,6 +25,11 @@ class AuctionDetail extends Model
         'status',
         'participant_on_auctions_id'
     ];
+
+
+    public function auction(){
+        return $this->BelongsTo(Auction::class, 'auction_id', 'id');
+    }
 
 
     public function policy(){

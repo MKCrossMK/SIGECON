@@ -15,6 +15,7 @@ class AuctionParticipant extends Model
     protected $fillable = [
         'name',
         'cedula',
+        'user_creator_id'
     ];
 
 

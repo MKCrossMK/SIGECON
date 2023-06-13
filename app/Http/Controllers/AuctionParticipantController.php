@@ -40,7 +40,9 @@ class AuctionParticipantController extends Controller
 
             return view('auctions.participants.index')
                 ->with('participants', $participants)
-                ->with('places', $places);
+                ->with('places', $places)
+                ->with('mdp', AuctionParticipant::MDP['cedula']);
+
         } else {
             return view('auctions.participants.index')
                 ->with('error', 'No hay subasta en curso')
@@ -80,7 +82,6 @@ class AuctionParticipantController extends Controller
                 'user_creator_id' => Auth::user()->id,
             ]);
 
-
             if (isset($request->number_paddle)) {
                 ParticipantOnAuction::create([
                     'auction_participant_id' => $auctionParticipant->id,
@@ -88,7 +89,6 @@ class AuctionParticipantController extends Controller
                     'auction_id' => $auction_id->id,
                 ]);
             }
-
 
             return redirect()->route('auctions.participants.index')
                 ->with('success', 'Participante registrado sastifactoriamente');
@@ -149,9 +149,17 @@ class AuctionParticipantController extends Controller
      * @param  \App\Models\AuctionParticipant  $auctionParticipant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AuctionParticipant $auctionParticipant)
+    public function destroy(ParticipantOnAuction $auctionParticipant)
     {
-        //
+
+     if($auctionParticipant->auction->a_status == Auction::STATUS_STARTED || $auctionParticipant->auction->a_status == Auction::STATUS_CLOSED  ){
+        return redirect()->back()->with('error', 'No se puede eliminar participante, la subasta ha sido iniciada o cerrada');
+
+     }elseif ($auctionParticipant->auction->a_status == Auction::STATUS_CREATED ) {
+        $auctionParticipant->delete();
+        return redirect()->back()->with('info', 'Participante ha sido eliminado');
+
+     }
     }
 
 

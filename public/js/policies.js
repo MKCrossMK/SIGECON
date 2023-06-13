@@ -778,3 +778,28 @@ function skipInterestRateMonth (idPolicy) {
         }
       });
 }
+
+
+const btnSubmit = document.getElementById('send_pay');
+
+
+function confirmSubmit() {
+    Swal.fire({
+        title: 'Confirmación',
+        text: "¿Desea registrar esta Poliza?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Realizar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('policy_form').submit();
+        }
+      });
+
+}
+
+btnSubmit.addEventListener('click',  confirmSubmit);
+
+

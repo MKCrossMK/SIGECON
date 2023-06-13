@@ -14,6 +14,7 @@ class Policy extends Model
     const STATUS_EXPIRED = "Vencida";
     const STATUS_TO_AUCTION = "Subastar";
     const STATUS_AUCTIONED = "Subastada";
+    const STATUS_DELETED = "Eliminada";
 
 
     protected $fillable = [

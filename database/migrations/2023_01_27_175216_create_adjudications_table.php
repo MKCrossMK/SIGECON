@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('adjudications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('auction_detail_id');
+            $table->unsignedBigInteger('auction_id');
             $table->date('date_created')->default(date('Y-m-d'));
 
             $table->foreign('auction_detail_id')->references('id')->on('auction_details');
+            $table->foreign('auction_id')->references('id')->on('auctions');
+
             $table->timestamps();
         });
     }

@@ -1,8 +1,11 @@
-.cardbtn h4 {
+.cardbtn h4  {
     color: #ffffff;
     font-weight: bold;
     font-size: 20px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.cardbtn i {
+    color: #ffffff;
 }
 
 .boder-orange {

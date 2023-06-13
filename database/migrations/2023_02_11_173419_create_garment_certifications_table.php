@@ -15,7 +15,24 @@ return new class extends Migration
     {
         Schema::create('garment_certifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('branch_office_id');
+
+            $table->string('description');
+            $table->string('carat');
+            $table->string('image');
+            $table->string('weight');
+            $table->string('stone_type');
+            $table->text('observations')->nullable();
+
+            $table->float('price');
             $table->timestamps();
+
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('branch_office_id')->references('id')->on('branch__offices');
+
         });
     }
 

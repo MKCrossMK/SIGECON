@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Auction;
 use App\Http\Requests\StoreAuctionRequest;
 use App\Http\Requests\UpdateAuctionRequest;
+use App\Models\Adjudication;
 use App\Models\AuctionDetail;
 use App\Models\AuctionParticipant;
 use App\Models\Branch_Office;
@@ -24,6 +25,7 @@ class AuctionController extends Controller
      */
     public function index()
     {
+        
         $branch_offices = Branch_Office::all();
 
         $policies = Policy::where('status', Policy::STATUS_EXPIRED)->get();
@@ -33,7 +35,7 @@ class AuctionController extends Controller
 
         $participants = [];
         $auction_details = [];
-        if ($auction_id != null) {
+        if ($auction_id != false) {
             $auction_details = AuctionDetail::where('auction_id', $auction_id->id)->get();
             $participants = ParticipantOnAuction::where('auction_id', $auction_id->id)->get();
 
@@ -44,7 +46,8 @@ class AuctionController extends Controller
         ->with('old_policies', $old_policies)
         ->with('branch_offices', $branch_offices)
         ->with('auction_details', $auction_details)
-        ->with('participants', $participants);
+        ->with('participants', $participants)
+        ->with('auction', $auction);
     }
 
     /**
@@ -204,18 +207,50 @@ class AuctionController extends Controller
 
     public function auctionInvoce(Auction $auction){
 
+        $adjudications = Adjudication::where('auction_id', $auction->id)->get();
+
+
         $details = $auction->details;
         $total = 0;
+        $toCount = 0;
 
         foreach ($details as $detail) {
             $total += $detail->auctioned_price;
         }
 
+        $adCount = count($adjudications);
+        $adDetails = count($details);
+        $toCount = $adCount + $adDetails;
 
         return view('auctions.invoices.results')
         ->with('auction', $auction)
         ->with('details', $details)
-        ->with('total', $total);
+        ->with('total', $total)
+        ->with('adCount', $adCount)
+        ->with('adDetails', $adDetails)
+        ->with('toCount', $toCount);
+    }
+
+    public function auctionAdjudications(Auction $auction){
+
+       $adjudications = Adjudication::where('auction_id', $auction->id)->get();
+
+       if (count($adjudications) <= 0) {
+        return redirect()->back()->with('info', 'Esta subasta no tuvo adjudicación');
+       }
+
+       $total = 0;
+
+       foreach($adjudications as $adjudication) {
+        $total += $adjudication->auctionDetail->auctioned_price;
+       }
+
+
+       return view('adjudications.auction-list')
+       ->with('adjudications', $adjudications)
+       ->with('auction', $auction)
+       ->with('total', $total);
+
     }
 
 

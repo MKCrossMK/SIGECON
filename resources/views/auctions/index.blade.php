@@ -7,7 +7,7 @@
         </div>
 
 
-        {{-- @if ($auction == false) --}}
+        @if ($auction == false)
 
         <div class="accordion " id="accordionExample">
             <div class="accordion-item">
@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        {{-- @endif --}}
+        @endif
 
 
 
@@ -297,11 +297,11 @@
                                                 <td>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <a href="{{ route('auctions.details.edit', $participant->id) }}"
+                                                            <a href="{{ route('auctions.participants.edit', $participant->id) }}"
                                                                 class="btn see w-100"><i class="fa-solid fa-pen mr-2"></i>Editar </a>
                                                         </div>
                                                         <div class="col">
-                                                            <a href="{{ route('auctions.details.delete', $participant->id) }}"
+                                                            <a href="{{ route('auctions.participants.delete', $participant->id) }}"
                                                                 class="btn btn_delete w-100"><i class="fa-solid fa-trash mr-2"></i>Eliminar </a>
                                                         </div>
                                                     </div>

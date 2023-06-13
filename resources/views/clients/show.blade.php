@@ -39,21 +39,54 @@
                             <table class="table table-striped " id="client_table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Cedula</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Telefono</th>
-                                        <th scope="col">Correo Electronico</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Numero de Poliza</th>
+                                        <th scope="col">Fecha de Inicio</th>
+                                        <th scope="col">Fecha de Fin</th>
+                                        <th scope="col">Sucursal</th>
+                                        <th scope="col">Valor prestado</th>
+                                        <th scope="col">Estado</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($policies as $policy)
                                     <tr>
-                                        <th scope="row">Cedula</th>
-                                        <td>Name</td>
-                                        <td>Phone</td>
-                                        <td>Email</td>
-                                        <td><a href="#" class="btn see w-100">Ver <i class="fa-solid fa-eye mr-2"></i></a></td>
+                                        <th scope="row"><a href="{{ route('policies.show', $policy->id)}}" style="text-decoration-line: none !important;">{{ $policy->number_policy }}</a></th>
+                                        <td>{{ $policy->date_start }}</td>
+                                        <td>{{ $policy->date_end }}</td>
+                                        <td>{{ $policy->branch_office->name}}</td>
+                                        <td>{{ $policy->loan_value }}</td>
+                                        <td>
+                                            @if ($policy->status === "Aprobada")
+                                            <span class="bg-green-200 text-green-800 font-bold mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                {{ $policy->status }}
+                                            </span>
+                                            @endif
+                                            @if ($policy->status === "Cancelada")
+                                            <span class="bg-red-200 text-red-800 font-bold mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                {{ $policy->status }}
+                                            </span>
+                                            @endif
+                                            @if ($policy->status === "Renovada")
+                                            <span class="bg-blue-200 text-blue-800 font-bold mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                {{ $policy->status }}
+                                            </span>
+                                            @endif
+                                            @if ($policy->status === "Vencida")
+                                            <span class="bg-yellow-200 text-yellow-800 font-bold mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                {{ $policy->status }}
+                                            </span>
+                                            @endif
+                                            @if ($policy->status === "Subastada")
+                                            <span class="bg-orange-200 text-orange-800 font-bold mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                {{ $policy->status }}
+                                            </span>
+                                            @endif
+                                        
+                                        </td>
+
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

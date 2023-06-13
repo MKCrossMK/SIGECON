@@ -26,6 +26,7 @@ class User extends Authenticatable
         'rol_id',
         'branch_office_id',
         'status',
+        'cash_id', 
         'unique_code'
     ];
 
@@ -62,6 +63,10 @@ class User extends Authenticatable
 
     public function fullname(){
         return $this->name . " " . $this->lastname;
+    }
+
+    public function cash(){
+        return $this->belongsTo(Cash::class, 'cash_id', 'id');
     }
 
 }

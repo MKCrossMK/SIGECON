@@ -103,6 +103,24 @@
                                 </div>
                             </div>
 
+                            <div class="row align-items-center mb-2">
+                                <div class="col">
+                                    <select id="cash_id" name="cash_id" class="form-select" aria-label="Sexo" hidden>
+                                        <option value="" selected disabled>Selecciona Caja Asignada
+                                        </option>
+                                        @foreach ($cashes as $cash)
+                                            <option @if (old('cash_id') == $cash->id) selected @endif
+                                                value="{{ $cash->id }}">{{ $cash->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('cash_id')
+                                        <div id="alert" class="alert alert-danger text-center" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="mt-3">
                                 <div class="row">
                                     <div class="col">
@@ -132,6 +150,7 @@
                         <th scope="col">Correo Electronico</th>
                         <th scope="col">Nivel de Acceso</th>
                         <th scope="col">Sucursal</th>
+                        <th scope="col">En linea</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -144,6 +163,13 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role->name }}</td>
                             <td>{{ $user->branch_office->name }}</td>
+                            <td>@if ($user->logged == true)
+                                <div class=" success w-100">SI</div>
+                                @else
+                                <div class=" warning w-100" disabled>NO</div>
+                                @endif
+                            </td>
+
                             <td>
                                 @if ($user->status === 0)
                                     <div class=" success w-100">Activo</div>
@@ -181,5 +207,8 @@
             });
         });
     </script>
+
+<script src="{{ asset('js/users.js') }}"></script>
+
 
 </x-app-layout>

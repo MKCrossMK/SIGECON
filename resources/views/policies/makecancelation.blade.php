@@ -111,7 +111,7 @@
                                     type="button">Cancelar</a>
                             </div>
                             <div class="col">
-                                <button id="send_pay" type="submit"
+                                <button id="send_cancelation" type="submit"
                                     onclick="return confirm('Cancelar poliza, ¿Desea continuar?')""
                                     class="btn btn_gold btn-block">Realizar Cancelación</button>
                             </div>

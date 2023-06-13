@@ -25,6 +25,11 @@ class StoreGarmentCertificationRequest extends FormRequest
     {
         return [
             'client_id' => 'required',
+            'a_description' => 'required|',
+            'a_carat' => 'required',
+            'image' => 'required',
+            'a_weight' => 'required',
+            'a_stone_type' => 'required',
         ];
     }
 
@@ -37,6 +42,12 @@ class StoreGarmentCertificationRequest extends FormRequest
     public function messages()
     {
         return [
+            'client_id.required' => 'Cliente Requerido para generar esta certificación.',
+            'a_description.required' => 'Descripción de la prenda es requerida.',
+            'a_carat.required' => 'Quilate de la prenda es requerido.',
+            'a_weight.required' => 'Peso de prenda es requerido',
+            'a_image.required' => 'Imagen de prenda requerida',
+            'a_stone_type.required' => 'Tipo de piedra es requirido',
             'client_id.required' => 'Cliente Requerido para generar esta certificación.',
         ];
     }

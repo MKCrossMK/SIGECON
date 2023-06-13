@@ -119,12 +119,41 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle"><i class="fa-solid fa-chart-simple mr-3"></i>Reportes</a>
+                        <ul class="collapse list-unstyled" id="reportSubmenu">
+                            <li>
+                                <a href="{{ route('report.index') }}"><i class="fa-solid fa-eye mr-3"></i>Sucursales</a>
+                            </li>
+                            {{-- <li>
+                                <a href="{{ route('certifications.create') }}"><i class="fa-solid fa-plus mr-3"></i> Nueva Certificacion</a>
+                            </li> --}}
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('policies.disburse.index') }}"><i class="fa-solid fa-cash-register mr-3"></i>Desembolsar Poliza</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('policies.manager.disburse.menu') }}"><i class="fa-solid fa-cash-register mr-3"></i>Desembolsar Poliza </a>
+                    </li>
                     <li>
                         <a href="{{ route('users.index') }}"><i class="fa-solid fa-user-plus mr-3"></i>Usuarios</a>
                     </li>
                     <li>
                         <a href="{{ route('auctions.index') }}"><i class="fa-solid fa-money-bill-trend-up mr-3"></i>Subasta</a>
                     </li>
+                    <li>
+                        <a href="{{ route('cashes.index') }}"><i class="fa-solid fa-money-bill-trend-up mr-3"></i>Cajas</a>
+                    </li>
+
+                    @if (Auth::user()->role->name == 'Cajero')
+                        <li>
+                            <a href="{{ route('cashes.closure.index') }}"><i class="fa-solid fa-money-bill-trend-up mr-3"></i>Cierre de Caja</a>
+                        </li>
+                    @endif
+                   
                     {{-- <li>
                         <a href="#auctionSubmenu" data-toggle="collapse" aria-expanded="false"
                             class="dropdown-toggle"><i class="fa-solid fa-money-bill-trend-up mr-3"></i>Subasta</a>

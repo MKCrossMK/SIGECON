@@ -20,4 +20,14 @@ class Client extends Model
         'sex',
         'civil_status'
     ];
+
+
+
+    public function fullname(){
+        return $this->name . " " . $this->lastname;
+    }
+
+    public function policies(){
+        return $this->hasMany(Policy::class, 'client_id', 'id');
+    }
 }

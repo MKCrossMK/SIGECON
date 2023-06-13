@@ -23,10 +23,8 @@ class PolicyRenovationController extends Controller
         $this->date_end =  date('Y-m-d', strtotime(date('Y-m-d') . '+4 month')); //  4 meses apartir de hoy  
     }
 
-
     public function makeRenovationCreate(Policy $policy)
     {
-
         $total_interest =  $policy->interest_pay + $policy->contract_pay;
         if ($total_interest <= 0) {
 
@@ -41,38 +39,40 @@ class PolicyRenovationController extends Controller
     public function makeRenovationStore(Request $request, Policy $policy)
     {
         $total = $policy->interest_pay + $policy->contract_pay;
+        if ($total <= 0) {
 
-        PolicyRenovation::create([
-            'policy_id' => $policy->id,
-            'user_id' => Auth::user()->id,
-            'interest_rate_paid' => $policy->interest_pay,
-            'contract_rate_paid' => $policy->contract_pay,
-            'date_paid' => $this->date_start,
-            'amount' => $total,
-        ]);
+            return redirect()->route('policies.index')
+                ->with('warning', 'El cliente dueño de la poliza: ' . $policy->number_policy . ' no debe intereses ni contrato');
+        } else {
 
+            PolicyRenovation::create([
+                'policy_id' => $policy->id,
+                'user_id' => Auth::user()->id,
+                'branch_offices_id' => Auth::user()->branch_office->id,
+                'interest_rate_paid' => $policy->interest_pay,
+                'contract_rate_paid' => $policy->contract_pay,
+                'date_paid' => $this->date_start,
+                'amount' => $total,
+            ]);
 
-        $policy->update([
-            'status_renovation' => 1,
-            'interest_pay' => 0,
-            'contract_pay' => 0,
-            'date_start' => $this->date_start,
-            'date_end' => $this->date_end,
-            'status' => Policy::STATUS_RENOVATED,
+            $policy->update([
+                'status_renovation' => 1,
+                'interest_pay' => 0,
+                'contract_pay' => 0,
+                'date_start' => $this->date_start,
+                'date_end' => $this->date_end,
+                'status' => Policy::STATUS_RENOVATED,
 
-        ]);
+            ]);
 
-        $policyRenovation =  PolicyRenovation::latest()->where('policy_id', $policy->id)->first();
+            $policyRenovation =  PolicyRenovation::latest()->where('policy_id', $policy->id)->first();
 
-
-
-        return view('print.policies.renovation')
-        ->with('success', 'Renovación Realizada Correctamente')
-        ->with('policyRenovation', $policyRenovation)
-        ->with('policy', $policy);
-
+            return view('print.policies.renovation')
+                ->with('success', 'Renovación Realizada Correctamente')
+                ->with('policyRenovation', $policyRenovation)
+                ->with('policy', $policy);
+        }
     }
-
 
     /**
      * Display a listing of the resource.

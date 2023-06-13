@@ -46,7 +46,7 @@ class PolicyPaymentController extends Controller
         if ($request->amount_pay >= $policy->interest_pay + $policy->contract_pay + $policy->capital_pay) {
             return redirect()->back()
             ->with('error', 'Sí el cliente desea pagar el prestamo completo, ir a cancelación de poliza');
-
+            
         } else {
 
             if ($request->amount_pay >= $policy->interest_pay + $policy->contract_pay) {
@@ -78,7 +78,6 @@ class PolicyPaymentController extends Controller
                 $paid = $paid - $capital;
 
 
-
                 $policy->update([
                     'status_credit_pay' => 1,
                     'interest_pay' => $interest_residuary,
@@ -91,10 +90,10 @@ class PolicyPaymentController extends Controller
                 ]);
 
 
-
               PolicyPayment::create([
                     'policy_id' => $policy->id,
                     'user_id' => Auth::user()->id,
+                    'branch_offices_id' => Auth::user()->branch_office->id,
                     'interest_rate_paid' => $interest,
                     'interest_rate_paid_residuary' => $interest_residuary,
                     // 'cp_interest_rate_paid_residuary' => $interest_residuary,

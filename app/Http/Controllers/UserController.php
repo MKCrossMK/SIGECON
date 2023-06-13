@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Branch_Office;
+use App\Models\Cash;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,10 +31,12 @@ class UserController extends Controller
         $roles = Role::all();
         $branch_offices = Branch_Office::all();
         $users = User::all();
+        $cashes = Cash::orderBy('name')->get();
         return view('users.index')
             ->with('roles', $roles)
             ->with('branch_offices', $branch_offices)
-            ->with('users', $users);
+            ->with('users', $users)
+            ->with('cashes', $cashes);
     }
 
 
@@ -56,6 +59,8 @@ class UserController extends Controller
             'password' => Hash::make($this->default_password),
             'rol_id' => $request->rol_id,
             'branch_office_id' => $request->branch_office_id,
+            'cash_id' => $request->cash_id,
+
         ]);
 
 

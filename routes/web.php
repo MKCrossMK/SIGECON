@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\AuctionDetailController;
 use App\Http\Controllers\AuctionParticipantController;
+use App\Http\Controllers\CashClosureController;
+use App\Http\Controllers\CashController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\GarmentCertificationController;
 use App\Http\Controllers\GoldRateController;
@@ -15,12 +17,15 @@ use App\Http\Controllers\OldPolicyRenovationController;
 use App\Http\Controllers\PolicyCancelationController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PolicyDetailController;
+use App\Http\Controllers\PolicyDisburseController;
 use App\Http\Controllers\PolicyPaymentController;
 use App\Http\Controllers\PolicyRenovationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Models\Auction;
 use App\Models\OldPolicyCancelation;
 use App\Models\OldPolicyRenovation;
+use App\Models\PolicyDisburse;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +48,22 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-route::middleware(['auth'])->group(function () {
+route::middleware(['auth'])->group(function () {           
+
+
+    //Cajas 
+    
+    Route::get('/cashes', [CashController::class, 'index'])->name('cashes.index');
+    Route::get('/cashes/balance/edit/{cash}', [CashController::class, 'editBalance'])->name('cashes.balance.edit');
+    Route::patch('/cashes/balance/update/{cash}', [CashController::class, 'updateBalance'])->name('cashes.balance.update');
+
+
+    // Cash Closures
+
+    Route::get('/cashes/closure', [CashClosureController::class, 'index'])->name('cashes.closure.index');
+    Route::get('/cashes/closure/store', [CashClosureController::class, 'store'])->name('cashes.closure.store');
+
+
     
     // Clients
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
@@ -100,6 +120,19 @@ route::middleware(['auth'])->group(function () {
     Route::get('/policies/print/payment/{policyPayment}', [PolicyController::class, 'printPolicyPayment'])->name('policies.print.payment');
     Route::get('/policies/print/renovation/{policyRenovation}', [PolicyController::class, 'printPolicyRenovation'])->name('policies.print.renovation');
     Route::get('/policies/print/cancelation/{policyCancelation}', [PolicyController::class, 'printPolicyCancelation'])->name('policies.print.cancelation');
+
+
+    // Policies disburse
+
+    Route::get('/policies/disburse', [PolicyDisburseController::class, 'index'])->name('policies.disburse.index');
+    Route::get('/policies/disburse/policy/store/{policy}', [PolicyDisburseController::class, 'disburseStore'])->name('policies.disburse.policy.store');
+
+
+    Route::get('/policies/manager/disburse/cashes', [PolicyDisburseController::class, 'menuManager'])->name('policies.manager.disburse.menu');
+    Route::get('/policies/manager/disburse/policies/{cash}', [PolicyDisburseController::class, 'indexManager'])->name('policies.manager.disburse.policy.index');
+    Route::get('/policies/manager/disburse/policy/store/{policy}/{cash}', [PolicyDisburseController::class, 'disburseManagerStore'])->name('policies.manager.disburse.policy.store');
+
+
 
                     // oldPolice ------------------------------------------------------------------------
  
@@ -159,9 +192,6 @@ route::middleware(['auth'])->group(function () {
     
 
 
-
-
-
     // auction detail
     Route::get('/auction/detail/store/policy/{policy}', [AuctionDetailController::class, 'store'])->name('auctions.details.store'); // new policies  this system
     Route::get('/auction/detail/store/old/policy/{oldPolicy}', [AuctionDetailController::class, 'storeOldPolicy'])->name('auctions.details.store.old'); // Old policies  this system
@@ -173,12 +203,16 @@ route::middleware(['auth'])->group(function () {
 
     Route::get('/auction/detail/delete/{auctionDetail}', [AuctionDetailController::class, 'destroy'])->name('auctions.details.delete'); 
 
-    Route::get('/auction/update/price/{auctionDetail}', [AuctionDetailController::class, 'upAuctionedrice'])->name('auctions.details.price.update'); 
+    Route::get('/auction/update/price/{auctionDetail}', [AuctionDetailController::class, 'upAuctionedPrice'])->name('auctions.details.price.update'); 
+    Route::get('/auction/set/price/{auctionDetail}', [AuctionDetailController::class, 'setPrice'])->name('auctions.details.price.set'); 
+
     Route::patch('/auction/sell/policy/{auctionDetail}', [AuctionDetailController::class, 'sellPolicyAuctioned'])->name('auctions.details.sell'); 
 
 
-    
 
+    // adjudications
+
+    Route::get('/auction/adjudications/{auction}', [AuctionController::class, 'auctionAdjudications'])->name('auctions.adjudications');
 
 
 
@@ -188,13 +222,20 @@ route::middleware(['auth'])->group(function () {
     Route::post('/auction/participants/store', [AuctionParticipantController::class, 'store'])->name('auctions.participants.store');
     Route::get('/auction/participants/edit/{auctionParticipant}', [AuctionParticipantController::class, 'edit'])->name('auctions.participants.edit');
     Route::patch('/auction/participants/update/{auctionParticipant}', [AuctionParticipantController::class, 'update'])->name('auctions.participants.update');
+    Route::get('/auction/participants/delete/{auctionParticipant}', [AuctionParticipantController::class, 'destroy'])->name('auctions.participants.delete');
 
 
     Route::get('/auction/participants/send/{auctionParticipant}', [AuctionParticipantController::class, 'toAuction'])->name('auctions.participants.send');
     Route::post('/auction/participants/send/store/{auctionParticipant}', [AuctionParticipantController::class, 'sendToAuction'])->name('auctions.participants.send.store');
 
+    // Report
 
+    Route::get('/reports', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/reports/{branch_Office}', [ReportController::class, 'view'])->name('report.view');
 
+    Route::get('/reports/today/{branch_Office}', [ReportController::class, 'reportToday'])->name('report.today');
+    Route::get('/reports/month/{branch_Office}', [ReportController::class, 'reportMonth'])->name('report.month');
+    Route::get('/reports/dates/{branch_Office}', [ReportController::class, 'getReportPerDate'])->name('report.dates');
 
 
 

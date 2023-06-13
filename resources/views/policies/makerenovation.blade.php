@@ -72,7 +72,7 @@
                                     type="button">Cancelar</a>
                             </div>
                             <div class="col">
-                                <button id="send_pay" type="submit"
+                                <button id="send_renovation" type="submit"
                                     onclick="return confirm('Renovar Poliza, ¿Desea continuar?')""
                                     class="btn btn_gold btn-block">Realizar Renovacion</button>
                             </div>

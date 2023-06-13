@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\GarmentCertification;
 use App\Http\Requests\StoreGarmentCertificationRequest;
 use App\Http\Requests\UpdateGarmentCertificationRequest;
+use App\Models\GarmentCertificationPrice;
 use App\Models\GoldRate;
+use Illuminate\Support\Facades\Auth;
 
 class GarmentCertificationController extends Controller
 {
@@ -16,9 +18,9 @@ class GarmentCertificationController extends Controller
      */
     public function index()
     {
-        // $certifications = GarmentCertification::all();
-        return view('certifications.index');
-        // ->with('certifications', $certifications);
+        $certifications = GarmentCertification::all();
+        return view('certifications.index')
+        ->with('certifications', $certifications);
     }
 
     /**
@@ -42,6 +44,42 @@ class GarmentCertificationController extends Controller
     public function store(StoreGarmentCertificationRequest $request)
     {
         $request->validated();
+        
+        $certificationPrice = GarmentCertificationPrice::first();
+
+        $articleImg = null;
+        // Si se necesita que la imagen no sea obligatorio, tomar la funcion del old-policy
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if (isset($file)) {
+                $destinationpath = '/img/certificationsImg/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $file->move(public_path() . $destinationpath, $filename);
+                $articleImg = $destinationpath . $filename;
+            } else {
+                $file = null;
+                $articleImg = null;
+            }
+        }
+
+
+        GarmentCertification::create([
+            'client_id' => $request->client_id,
+            'user_id' => Auth::user()->id,
+            'branch_office_id' => Auth::user()->branch_office->id,
+            'description' => $request->a_description,
+            'carat' => $request->a_carat,
+            'image' => $articleImg,
+            'weight' => $request->a_weight,
+            'observations' => $request->observations,
+            'stone_type' => $request->a_stone_type,
+            'price' => $certificationPrice->price
+        ]);
+
+        $lastCertificationID = $this->lastPolicyID(Auth::user()->id);
+
+        return redirect()->route('certifications.show', $lastCertificationID);
     }
 
     /**
@@ -52,7 +90,7 @@ class GarmentCertificationController extends Controller
      */
     public function show(GarmentCertification $garmentCertification)
     {
-        //
+        return view('certifications.show')->with('garmentCertification', $garmentCertification);
     }
 
     /**
@@ -87,5 +125,11 @@ class GarmentCertificationController extends Controller
     public function destroy(GarmentCertification $garmentCertification)
     {
         //
+    }
+
+    
+    public function lastPolicyID($userID)
+    {
+        return GarmentCertification::latest('id')->Where('user_id', $userID)->first();
     }
 }

@@ -9,7 +9,7 @@
 
         <div class="div-view-policies">
             <div>
-                <form action="{{ route('certifications.store') }}" method="POST">
+                <form action="{{ route('certifications.store') }}" id="certification_form" method="POST" enctype="multipart/form-data" >
                     @csrf
 
                     @if (Session::has('message'))
@@ -85,22 +85,34 @@
                                     <div id="articles_div">
                                         <div class="mb-2">
                                             <div class="row">
+                                                @error('a_description')
+                                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                 @enderror
                                                 <div class="col">
                                                     <div class="form-floating txarea_desc">
-                                                        <textarea id="a_description"  name="a_description" class="form-control txarea_desc"></textarea>
+                                                        <textarea id="a_description"  name="a_description" 
+                                                        class="form-control txarea_desc">{{old("a_description")}}</textarea>
                                                         <label for="a_description">Descripcion de la prenda:</label>
                                                     </div>
+                                             
                                                 </div>
                                                 <div class="col">
                                                     <div class="row align-items-center">
-                                                        <label for="a_image">Imagen del articulo:</label>
+                                                        <label for="image">Imagen del articulo:</label>
                                                         {{-- <input type="file" id="a_image2" accept=".jpg,.jpeg,.png" class="form-control-file"> --}}
                                                         <img id="img_prev" class="img_article_add"
                                                             src="{{ asset('img/item_article_img.gif') }}"
                                                             alt="Articles Image" />
-                                                        <input type="file" id="a_image" name="a_image" value="{{old('a_image')}}" accept=".jpg,.jpeg,.png"
+                                                        <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png"
                                                             class="form-control-file">
                                                     </div>
+                                                @error('a_image')
+                                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                 @enderror
                                                 </div>
                                             </div>
 
@@ -109,33 +121,58 @@
                                         <div class="row">
                                             <div class="form-group col">
                                                 <label for="a_carat">Quilate (K):</label>
-                                                <select type="text" id="a_carat" class="form-control">
+                                                <select type="text" id="a_carat" name="a_carat" class="form-control">
                                                     <option value="" selected disabled>Quilate (K)</option>
                                                     @foreach ($gold_rates as $gold)
-                                                        <option value="{{ $gold->carat }}">{{ $gold->carat }}
+                                                        <option @if (old('a_carat') ==  $gold->carat ) selected @endif value="{{ $gold->carat }}">{{ $gold->carat }}
                                                     @endforeach
                                                 </select>
+                                                @error('a_carat')
+                                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                 @enderror
                                             </div>
                                             <div class="form-group col">
-                                                <label for="a_stonetype">Tipo de piedra:</label>
-                                                <select id="a_stonetype" name="a_stonetype" class="form-control">
-                                                    <option value="No especificado" selected aria-readonly="">Tipos de
-                                                        piedra</option>
-                                                    <option value="Brillante">Diamante</option>
-                                                    <option value="Zafiro">Zafiro</option>
-                                                    <option value="Esmeralda">Esmeralda</option>
-                                                    <option value="Granate">Granate</option>
+                                                <label for="a_stone_type">Tipo de piedra:</label>
+                                                <select id="a_stone_type" name="a_stone_type" class="form-control">
+                                                    <option value="No especificado" selected>Tipos de piedra</option>
+                                                    <option @if(old('a_stonetype') == "Ninguno") selected @endif value="Ninguno">Ninguno</option>
+                                                    <option @if (old('a_stonetype') == "Diamante") selected @endif value="Diamante">Diamante</option>
+                                                    <option @if (old('a_stonetype') == "Zafiro") selected @endif value="Zafiro">Zafiro</option>
+                                                    <option @if (old('a_stonetype') == "Esmeralda") selected @endif value="Esmeralda">Esmeralda</option>
+                                                    <option @if (old('a_stonetype') == "Granate") selected @endif value="Granate">Granate</option>
                                                 </select>
+                                                @error('a_stone_type')
+                                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="form-group col">
                                                 <label for="a_weight">Peso (Gramos-grs):</label>
-                                                <input type="text" id="a_weight" class="form-control"
-                                                    data-mask="###0.00">
+                                                <input type="text" id="a_weight" name="a_weight" value="{{old('a_weight')}}" class="form-control" data-mask="###0.00">
+                                                @error('a_weight')
+                                                    <div id="alert" class="alert alert-danger text-center" role="alert">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                         </div>
+                                        @error('observations')
+                                        <div id="alert" class="alert alert-danger text-center" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                     @enderror
+                                        <div class="form-floating txarea_desc">
+                                            <textarea id="observations"  name="observations" 
+                                            class="form-control txarea_desc">{{old("observations")}}</textarea>
+                                            <label for="observations">Observaciones:</label>
+                                        </div>
+                                 
 
                                         <div class="div_btn_add mt-3">
-                                            <button type="submit" class="btn btn_add w-100">Crear
+                                            <button type="button" id="submitCertification" class="btn btn_add w-100">Crear
                                                 Certificación</button>
                                         </div>
 
@@ -264,6 +301,5 @@
         </div>
 
         <script src="{{ asset('js/certification.js') }}"></script>
-
 
 </x-app-layout>

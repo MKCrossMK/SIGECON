@@ -27,6 +27,7 @@ class PolicyCancelationController extends Controller
     {
 
         $total = $policy->capital_pay +  $policy->interest_pay + $policy->contract_pay;
+
         if ($total <= 0 && $policy->status == Policy::STATUS_CANCELED) {
 
             return redirect()->back()
@@ -41,33 +42,41 @@ class PolicyCancelationController extends Controller
     {
         $total = $policy->capital_pay +  $policy->interest_pay + $policy->contract_pay;
 
-        PolicyCancelation::create([
-            'policy_id' => $policy->id,
-            'user_id' => Auth::user()->id,
-            'interest_rate_paid' => $policy->interest_pay,
-            'contract_rate_paid' => $policy->contract_pay,
-            'capital_paid' => $policy->capital_pay,
-            'date_paid' => $this->date_start,
-            'amount' => $total,
-        ]);
+        if ($total <= 0 && $policy->status == Policy::STATUS_CANCELED) {
+
+            return redirect()->route('policies.index')
+            ->with('warning', 'La poliza: ' . $policy->number_policy . ' está cancelada');
+
+        } else {
+            PolicyCancelation::create([
+                'policy_id' => $policy->id,
+                'user_id' => Auth::user()->id,
+                'branch_offices_id' => Auth::user()->branch_office->id,
+                'interest_rate_paid' => $policy->interest_pay,
+                'contract_rate_paid' => $policy->contract_pay,
+                'capital_paid' => $policy->capital_pay,
+                'date_paid' => $this->date_start,
+                'amount' => $total,
+            ]);
 
 
-        $policy->update([
-            'status_cancelation' => 1,
-            'interest_pay' => 0,
-            'contract_pay' => 0,
-            'capital_pay' => 0,
-            'status' => Policy::STATUS_CANCELED,
+            $policy->update([
+                'status_cancelation' => 1,
+                'interest_pay' => 0,
+                'contract_pay' => 0,
+                'capital_pay' => 0,
+                'status' => Policy::STATUS_CANCELED,
 
-        ]);
+            ]);
 
-        $policyCancelation =  PolicyCancelation::latest()->where('policy_id', $policy->id)->first();
+            $policyCancelation =  PolicyCancelation::latest()->where('policy_id', $policy->id)->first();
 
 
-        return view('print.policies.cancelation')
-            ->with('success', 'La poliza: ' . $policy->number_policy . ' Se ha cancelado Correctamente')
-            ->with('policyCancelation', $policyCancelation)
-            ->with('policy', $policy);
+            return view('print.policies.cancelation')
+                ->with('success', 'La poliza: ' . $policy->number_policy . ' Se ha cancelado Correctamente')
+                ->with('policyCancelation', $policyCancelation)
+                ->with('policy', $policy);
+        }
     }
 
     /**

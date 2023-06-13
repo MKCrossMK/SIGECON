@@ -30,7 +30,7 @@ class StoreClientRequest extends FormRequest
             'name' => 'required',
             'lastname' => 'required',
             'phone' => 'required',
-            'email' => 'unique:clients',
+            'email' => 'unique:clients|nullable',
         ];
     }
 

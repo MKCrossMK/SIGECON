@@ -44,7 +44,7 @@ class PolicyController extends Controller
      */
     public function index()
     {
-        $policies = Policy::orderBy('created_at', 'desc')->get();
+        $policies = Policy::where('disbursed', true)->where('branch_offices_id', Auth::user()->branch_office->id)->orderBy('created_at', 'desc')->get();
         return view('policies.index')
             ->with('policies', $policies);
     }

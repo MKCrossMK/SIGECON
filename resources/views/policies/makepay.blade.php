@@ -72,7 +72,7 @@
                                 type="button">Cancelar</a>
                         </div>
                         <div class="col">
-                            <button id="send_pay" type="submit"
+                            <button id="send_payment" type="submit"
                                 onclick="return confirm('Registrar abono, ¿Desea continuar?')""
                                 class="btn btn_gold btn-block">Guardar</button>
                         </div>
